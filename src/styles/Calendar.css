@@ -1,0 +1,77 @@
+@import './index.css';
+
+.Calendar {
+  color: var(--text);
+  margin: 50px;
+  width: 80%;
+  flex: 1;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid var(--accent);
+  padding: 10px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.middle {
+  width: 90%;
+}
+
+.icon {
+  font-family: 'Material Icons';
+  font-size: large;
+  cursor: pointer;
+  user-select: none;
+}
+
+.subheader {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-right: 1px solid var(--accent);
+  border-left: 1px solid var(--accent);
+}
+
+.day {
+  width: 14.2%;
+}
+
+.calendar-cells {
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--accent);
+  border-bottom: 1px solid var(--accent);
+}
+
+.date-row {
+  display: flex;
+  flex-direction: row;
+  border-top: 1px solid var(--accent);
+  width: 100%;
+}
+
+.date {
+  border-left: 1px solid var(--accent);
+  text-align: right;
+  width: 14.2%;
+  height: 12vh;
+}
+
+.disabled {
+  color: gray;
+  border-left: 1px solid var(--accent);
+  text-align: right;
+  width: 14.2%;
+}
+
+.selected {
+  color: var(--accent);
+}
