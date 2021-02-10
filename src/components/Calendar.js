@@ -13,30 +13,33 @@ import {
   addDays,
 } from 'date-fns';
 
-const Calendar = () => {
+const Calendar = (props) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
 
-  const renderMonth = () => {
+  const renderMonth = (props) => {
     const monthFormat = 'MMMM yyyy';
 
     return (
       <div className="header">
-        <div className="left" onClick={previousMonth}>
-          <div className="icon">chevron_left</div>
+        <div className="left-div" onClick={previousMonth}>
+          <div className="icon arrow">chevron_left</div>
         </div>
-        <div className="middle">
+        <div className="middle-div">
           <div className="select-today btn" onClick={selectToday}>
-            TODAY
+            Today
           </div>
           <span className="month-display">
             {format(currentMonth, monthFormat)}
           </span>
-          <div className="add-event btn">ADD EVENT</div>
+          <div className="add-event btn" onClick={props.triggerAddEvent}>
+            <div className="icon">add</div>
+            <span>Add Event</span>
+          </div>
         </div>
-        <div className="right">
-          <div className="icon" onClick={nextMonth}>
+        <div className="right-div">
+          <div className="icon arrow" onClick={nextMonth}>
             chevron_right
           </div>
         </div>
@@ -75,7 +78,7 @@ const Calendar = () => {
     while (date <= endDate) {
       for (let i = 0; i < 7; i++) {
         formattedDate = format(date, dateFormat);
-        const currentDate = date;
+        const cellDate = date;
         dates.push(
           <div
             className={`${
@@ -86,7 +89,7 @@ const Calendar = () => {
                 : 'date'
             }`}
             key={date}
-            onClick={() => dateClickHandler(currentDate, monthStart)}
+            onClick={() => dateClickHandler(cellDate, monthStart)}
           >
             <span className="date-number">{formattedDate}</span>
           </div>
@@ -124,7 +127,7 @@ const Calendar = () => {
 
   return (
     <div className="Calendar">
-      {renderMonth()}
+      {renderMonth(props)}
       {renderWeekDays()}
       {renderDates()}
     </div>

@@ -1,9 +1,10 @@
 @import url(https://fonts.googleapis.com/icon?family=Material+Icons);
 
 :root {
-  --background: #15112b;
+  --background-back: #15112b;
   --accent: #c36a80;
   --text: #ffffff;
+  --background-front: #0c0a19;
 }
 
 body {

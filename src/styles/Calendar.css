@@ -4,7 +4,9 @@
   color: var(--text);
   margin: 50px;
   width: 80%;
+  min-width: 750px;
   height: 80%;
+  min-height: 400px;
   flex: 1;
 }
 
@@ -13,13 +15,14 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  background-color: #1d193d;
   border: 1px solid var(--accent);
   padding: 10px;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
 
-.middle {
+.middle-div {
   width: 90%;
   display: flex;
   flex-direction: row;
@@ -36,9 +39,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 32px;
 }
 
 .btn {
+  width: 120px;
   background-color: var(--accent);
   padding: 10px;
   border-radius: 5px;
@@ -48,16 +53,21 @@
   user-select: none;
   text-align: center;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
+  font-size: 18px;
 }
 
 .icon {
   font-family: 'Material Icons';
-  font-size: 32px;
+  font-size: 18px;
   cursor: pointer;
   user-select: none;
+}
+
+.arrow {
+  font-size: 32px;
 }
 
 .subheader {
@@ -69,6 +79,8 @@
   padding-bottom: 5px;
   border-right: 1px solid var(--accent);
   border-left: 1px solid var(--accent);
+  background-color: var(--background-back);
+  font-size: 18px;
 }
 
 .day {
@@ -91,6 +103,7 @@
 
 .date {
   border-left: 1px solid var(--accent);
+  background-color: var(--background-back);
   text-align: right;
   width: 14.2%;
   height: 12vh;
@@ -114,7 +127,7 @@
 }
 
 .selected {
-  background-color: #1e183d;
+  background-color: #262050;
 }
 
 .selected .date-number {
