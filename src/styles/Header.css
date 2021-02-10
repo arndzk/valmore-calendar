@@ -27,6 +27,7 @@
   color: var(--accent);
   font-size: 28px;
   padding-right: 10px;
+  cursor: default;
 }
 
 #source-code-icon {
