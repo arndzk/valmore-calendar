@@ -16,7 +16,7 @@ import {
 
 const Calendar = () => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
-  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   const renderMonth = () => {
     const monthFormat = 'MMMM yyyy';
@@ -71,19 +71,20 @@ const Calendar = () => {
     while (date <= endDate) {
       for (let i = 0; i < 7; i++) {
         formattedDate = format(date, dateFormat);
+        const currentDate = date;
         dates.push(
           <div
             className={`${
               !isSameMonth(date, monthStart)
-                ? 'disabled'
+                ? `date disabled`
                 : isSameDay(date, selectedDate)
-                ? 'selected'
+                ? 'date selected'
                 : 'date'
             }`}
             key={date}
-            onClick={() => dateClickHandler(parse(date))}
+            onClick={() => dateClickHandler(currentDate, monthStart)}
           >
-            <span className="dateNumber">{formattedDate}</span>
+            <span className="date-number">{formattedDate}</span>
           </div>
         );
         date = addDays(date, 1);
@@ -106,8 +107,10 @@ const Calendar = () => {
     setCurrentMonth(addMonths(currentMonth, 1));
   };
 
-  const dateClickHandler = (date) => {
-    setSelectedDate(date);
+  const dateClickHandler = (date, monthStart) => {
+    if (isSameMonth(date, monthStart)) {
+      setSelectedDate(date);
+    }
   };
 
   return (

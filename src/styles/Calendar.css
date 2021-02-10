@@ -63,15 +63,34 @@
   text-align: right;
   width: 14.2%;
   height: 12vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.date .date-number {
+  margin: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 28px;
+  height: 28px;
 }
 
 .disabled {
   color: gray;
-  border-left: 1px solid var(--accent);
-  text-align: right;
-  width: 14.2%;
+  background-color: #0c0a19;
 }
 
 .selected {
-  color: var(--accent);
+  background-color: #1e183d;
+}
+
+.selected .date-number {
+  background-color: var(--accent);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 28px;
+  height: 28px;
 }
