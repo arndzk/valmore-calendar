@@ -2,7 +2,6 @@ import '../styles/Calendar.css';
 import React, { useState } from 'react';
 import {
   format,
-  parse,
   startOfMonth,
   endOfMonth,
   isSameMonth,
@@ -16,6 +15,7 @@ import {
 
 const Calendar = () => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const renderMonth = () => {
@@ -27,9 +27,13 @@ const Calendar = () => {
           <div className="icon">chevron_left</div>
         </div>
         <div className="middle">
-          <span className="month-year-display">
+          <div className="select-today btn" onClick={selectToday}>
+            TODAY
+          </div>
+          <span className="month-display">
             {format(currentMonth, monthFormat)}
           </span>
+          <div className="add-event btn">ADD EVENT</div>
         </div>
         <div className="right">
           <div className="icon" onClick={nextMonth}>
@@ -97,6 +101,11 @@ const Calendar = () => {
       dates = [];
     }
     return <div className="calendar-cells">{dateRows}</div>;
+  };
+
+  const selectToday = () => {
+    setCurrentMonth(currentDate);
+    setSelectedDate(currentDate);
   };
 
   const previousMonth = () => {
