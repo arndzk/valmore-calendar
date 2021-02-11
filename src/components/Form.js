@@ -1,49 +1,70 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useContext } from 'react';
 import '../styles/Form.css';
+import AppContext from '../context/App/appContext';
+import { format } from 'date-fns';
 
 const Form = (props) => {
-  const initialState = {
-    eventName: '',
-    eventDescription: '',
-  };
+  const appContext = useContext(AppContext);
+  const { selectedDate } = appContext;
 
-  const reducer = (state, { property, value }) => {
-    return {
-      ...state,
-      [property]: value,
-    };
-  };
+  const {
+    formType,
+    formTitle,
+    eventName,
+    eventDescription,
+    submitBtnText,
+    closeForm,
+  } = props;
 
-  const [state, dispatch] = useReducer(reducer, initialState);
+  let dateToDisplay;
 
-  const handleChange = (event) => {
-    dispatch({ property: event.target.name, value: event.target.value });
-  };
+  if (formType === 'add-form') {
+    dateToDisplay = format(selectedDate, 'EEEEEEEEE dd/MM');
+  }
 
-  const { eventName, eventDescription } = state;
+  // const reducer = (state, { property, value }) => {
+  //   return {
+  //     ...state,
+  //     [property]: value,
+  //   };
+  // };
+
+  // const [state, dispatch] = useReducer(reducer, initialState);
+
+  // const handleChange = (event) => {
+  //   dispatch({ property: event.target.name, value: event.target.value });
+  // };
+
+  // const { eventName, eventDescription } = state;
 
   return (
     <div className="form-container">
-      <form className="form">
+      <form id={formType} className="form">
+        <div className="form-header">
+          <span>{formTitle}</span>
+          <span class="header-date">{dateToDisplay}</span>
+        </div>
         <div className="form-inputs">
+          <label className="input-label">Event Name:</label>
           <input
             name="eventName"
             value={eventName}
-            onChange={handleChange}
+            //onChange={handleChange}
             placeholder="Event Name"
           />
+          <label className="input-label">Event Description:</label>
           <input
             name="eventDescription"
             value={eventDescription}
-            onChange={handleChange}
+            //onChange={handleChange}
             placeholder="Event Description"
           />
         </div>
         <div className="form-btns">
           <div className="save-event btn">
-            <span>Save Event</span>
+            <span>{submitBtnText}</span>
           </div>
-          <div className="cancel btn" onClick={props.triggerIdle}>
+          <div className="cancel btn" onClick={closeForm}>
             <span>Cancel</span>
           </div>
         </div>

@@ -3,7 +3,7 @@ import '../styles/Header.css';
 
 const Header = () => {
   return (
-    <div class="Header">
+    <div className="Header">
       <div className="app-title">
         <span id="calendar-icon" className="icon">
           calendar_today

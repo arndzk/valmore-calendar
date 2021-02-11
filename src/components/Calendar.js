@@ -1,5 +1,6 @@
 import '../styles/Calendar.css';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import AppContext from '../context/App/appContext';
 import {
   format,
   startOfMonth,
@@ -11,36 +12,42 @@ import {
   endOfWeek,
   isSameDay,
   addDays,
+  parseISO,
 } from 'date-fns';
 
 const Calendar = (props) => {
+  const appContext = useContext(AppContext);
+  const { selectedDate, selectToday, setSelectedDate, events } = appContext;
+
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  //const [selectedDate, setSelectedDate] = useState(new Date());
 
   const renderMonth = (props) => {
     const monthFormat = 'MMMM yyyy';
 
     return (
       <div className="header">
-        <div className="left-div" onClick={previousMonth}>
-          <div className="icon arrow">chevron_left</div>
-        </div>
-        <div className="middle-div">
-          <div className="select-today btn" onClick={selectToday}>
+        <div className="left-div">
+          <div className="select-today btn" onClick={resetToToday}>
             Today
           </div>
+          <div className="icon arrow" onClick={previousMonth}>
+            chevron_left
+          </div>
+          <div className="icon arrow" onClick={nextMonth}>
+            chevron_right
+          </div>
+        </div>
+        <div className="middle-div">
           <span className="month-display">
             {format(currentMonth, monthFormat)}
           </span>
+        </div>
+        <div className="right-div">
           <div className="add-event btn" onClick={props.triggerAddEvent}>
             <div className="icon">add</div>
             <span>Add Event</span>
-          </div>
-        </div>
-        <div className="right-div">
-          <div className="icon arrow" onClick={nextMonth}>
-            chevron_right
           </div>
         </div>
       </div>
@@ -92,6 +99,7 @@ const Calendar = (props) => {
             onClick={() => dateClickHandler(cellDate, monthStart)}
           >
             <span className="date-number">{formattedDate}</span>
+            {renderEvents(date)}
           </div>
         );
         date = addDays(date, 1);
@@ -106,9 +114,28 @@ const Calendar = (props) => {
     return <div className="calendar-cells">{dateRows}</div>;
   };
 
-  const selectToday = () => {
+  const renderEvents = (date) => {
+    const eventArray = [];
+    events.forEach((calendarEvent) => {
+      if (isSameDay(parseISO(calendarEvent.event_date), date)) {
+        console.log(
+          `${calendarEvent.event_name} is on ${parseISO(
+            calendarEvent.event_date
+          )}`
+        );
+        eventArray.push(
+          <div className="calendar-event" key={calendarEvent._id}>
+            {calendarEvent.event_name}
+          </div>
+        );
+      }
+    });
+    return <div className="event-cells">{eventArray}</div>;
+  };
+
+  const resetToToday = () => {
     setCurrentMonth(currentDate);
-    setSelectedDate(currentDate);
+    selectToday(currentDate);
   };
 
   const previousMonth = () => {

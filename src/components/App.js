@@ -1,5 +1,6 @@
 import '../styles/App.css';
 import React, { useState } from 'react';
+import AppState from '../context/App/AppState';
 import Header from './Header';
 import Footer from './Footer';
 import Calendar from './Calendar';
@@ -17,10 +18,12 @@ const App = () => {
 
   return (
     <div className="App">
-      <Header />
-      <Calendar triggerAddEvent={addEventState} />
-      {state === 'add-event' && <AddEventForm triggerIdle={idleState} />}
-      <Footer />
+      <AppState>
+        <Header />
+        <Calendar triggerAddEvent={addEventState} />
+        {state === 'add-event' && <AddEventForm triggerIdle={idleState} />}
+        <Footer />
+      </AppState>
     </div>
   );
 };
