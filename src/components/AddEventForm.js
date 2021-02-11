@@ -1,12 +1,8 @@
 import '../styles/Form.css';
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import Form from './Form';
-import AppContext from '../context/App/appContext';
 
 const AddEventForm = (props) => {
-  const appContext = useContext(AppContext);
-  const { addEvent, events } = appContext;
-
   return (
     <div className="form-container">
       <Form

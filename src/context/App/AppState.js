@@ -3,9 +3,7 @@ import React, { useReducer, useEffect } from 'react';
 import AppReducer from './appReducer';
 import AppContext from './appContext';
 
-import { ADD_EVENT } from '../types';
-import { SELECT_DATE } from '../types';
-import { GET_EVENTS } from '../types';
+import { ADD_EVENT, VIEW_EVENT, SELECT_DATE, GET_EVENTS } from '../types';
 
 const AppState = (props) => {
   const initialState = {
@@ -13,12 +11,12 @@ const AppState = (props) => {
     selectedEvent: {},
     selectedDate: new Date(),
     currentDate: new Date(),
+    status: 'idle',
   };
 
   const url = `https://api.corvium.com/api/1.0.0/test/events/${process.env.REACT_APP_VALMORE_API_KEY}/list`;
 
   useEffect(() => {
-    console.log(process.env);
     // fetch(url, {
     //   method: 'POST', // or 'PUT'
     //   headers: {
@@ -27,9 +25,9 @@ const AppState = (props) => {
     //     'Content-Type': 'application/json',
     //   },
     //   body: JSON.stringify({
-    //     event_name: 'Test Event 2',
-    //     event_description: 'This is a test event 2',
-    //     event_date: '2021-02-12 18:00:00',
+    //     event_name: 'Test Event 3',
+    //     event_description: 'This is a test event 3',
+    //     event_date: '2021-03-5 18:00:00',
     //   }),
     // })
     //   .then((response) => response.json())
@@ -74,7 +72,6 @@ const AppState = (props) => {
   const processData = (data) => {
     let eventList = [];
     eventList = data.return.docs;
-    console.log('eventList', eventList);
     const processedEventList = [];
     eventList.forEach((calendarEvent) => {
       processedEventList.push({
@@ -113,10 +110,16 @@ const AppState = (props) => {
   };
 
   const setSelectedDate = (date) => {
-    console.log(date);
     dispatch({
       type: SELECT_DATE,
       payload: date,
+    });
+  };
+
+  const setStatus = (newStatus) => {
+    dispatch({
+      type: VIEW_EVENT,
+      payload: newStatus,
     });
   };
 
@@ -126,9 +129,11 @@ const AppState = (props) => {
         events: state.events,
         selectedEvent: state.selectedEvent,
         selectedDate: state.selectedDate,
+        status: state.status,
         addEvent,
         selectToday,
         setSelectedDate,
+        setStatus,
       }}
     >
       {props.children}

@@ -118,13 +118,12 @@ const Calendar = (props) => {
     const eventArray = [];
     events.forEach((calendarEvent) => {
       if (isSameDay(parseISO(calendarEvent.event_date), date)) {
-        console.log(
-          `${calendarEvent.event_name} is on ${parseISO(
-            calendarEvent.event_date
-          )}`
-        );
         eventArray.push(
-          <div className="calendar-event" key={calendarEvent._id}>
+          <div
+            className="calendar-event"
+            key={calendarEvent._id}
+            onClick={props.triggerEditEvent}
+          >
             {calendarEvent.event_name}
           </div>
         );
