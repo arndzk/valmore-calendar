@@ -6,10 +6,12 @@ import Footer from './Footer';
 import Calendar from './Calendar';
 import AddEventForm from './AddEventForm';
 import EditEventForm from './EditEventForm';
+import EventView from './EventView.js';
 
 const App = () => {
   const [isAdding, setIsAdding] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [isViewing, setIsViewing] = useState(false);
 
   const displayAddEvent = () => {
     setIsAdding(true);
@@ -23,8 +25,12 @@ const App = () => {
   const hideEditEvent = () => {
     setIsEditing(false);
   };
-
-  //{status === 'view-event' && <EditEventForm />}
+  const displayEventView = () => {
+    setIsViewing(true);
+  };
+  const hideEventView = () => {
+    setIsViewing(false);
+  };
 
   return (
     <div className="App">
@@ -32,10 +38,16 @@ const App = () => {
         <Header />
         <Calendar
           displayAddEvent={displayAddEvent}
-          displayEditEvent={displayEditEvent}
+          displayEventView={displayEventView}
         />
         {isAdding && <AddEventForm hideAddEvent={hideAddEvent} />}
         {isEditing && <EditEventForm hideEditEvent={hideEditEvent} />}
+        {isViewing && (
+          <EventView
+            hideEventView={hideEventView}
+            displayEditEvent={displayEditEvent}
+          />
+        )}
         <Footer />
       </AppState>
     </div>

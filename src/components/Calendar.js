@@ -130,8 +130,8 @@ const Calendar = (props) => {
             className="calendar-event"
             key={calendarEvent._id}
             onClick={() => {
-              setSelectedEvent(calendarEvent);
-              props.displayEditEvent();
+              //setSelectedEvent(calendarEvent);
+              props.displayEventView();
             }}
           >
             <span className="event-time">
@@ -146,12 +146,11 @@ const Calendar = (props) => {
   };
 
   const formatTime = (date) => {
-    console.log(typeof date);
     const dateObj = new Date(date);
-    console.log(
-      dateObj.toLocaleTimeString('en', { timeStyle: 'short', hour12: false })
-    );
-    console.log(dateObj.getTimezoneOffset());
+    return dateObj.toLocaleTimeString('en', {
+      timeStyle: 'short',
+      hour12: false,
+    });
   };
 
   const resetToToday = () => {

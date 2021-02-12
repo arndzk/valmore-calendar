@@ -22,7 +22,6 @@ const Form = (props) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const handleChange = (event) => {
-    console.log('change detected', event.target.name, event.target.value);
     dispatch({ property: event.target.name, value: event.target.value });
   };
 
