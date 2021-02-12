@@ -3,7 +3,13 @@ import React, { useReducer, useEffect } from 'react';
 import AppReducer from './appReducer';
 import AppContext from './appContext';
 
-import { ADD_EVENT, SELECT_DATE, SELECT_EVENT, GET_EVENTS } from '../types';
+import {
+  ADD_EVENT,
+  SELECT_DATE,
+  SELECT_EVENT,
+  GET_EVENTS,
+  VIEW_EVENTS,
+} from '../types';
 
 const AppState = (props) => {
   const initialState = {
@@ -11,32 +17,14 @@ const AppState = (props) => {
     selectedEvent: {},
     selectedDate: new Date(),
     currentDate: new Date(),
+    isViewing: false,
   };
 
   const url = `https://api.corvium.com/api/1.0.0/test/events/${process.env.REACT_APP_VALMORE_API_KEY}/list`;
   //const url = `https://api.corvium.com/api/1.0.0/test/events/${process.env.REACT_APP_VALMORE_API_KEY}/new`;
 
   useEffect(() => {
-    // fetch(url, {
-    //   method: 'POST', // or 'PUT'
-    //   headers: {
-    //     Authorization:
-    //       'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyMDE2IiwibmFtZSI6ImlBbGVydCBEZXZlbG9wZXIiLCJhZG1pbiI6dHJ1ZX0.2akYsCOtrsocM1UXPsoXbLjqwlc1X22lHCCcAqaNCo8',
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({
-    //     event_name: 'Test Event 6',
-    //     event_description: 'This is a test event 6',
-    //     event_date: '2021-02-11 21:00:00',
-    //   }),
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     console.log('Success:', data);
-    //   })
-    //   .catch((error) => {
-    //     console.error('Error:', error);
-    //   });
+    getEvents();
     // fetch(
     //   `https://api.corvium.com/api/1.0.0/test/events/${process.env.REACT_APP_VALMORE_API_KEY}/60255498e4488100115479d7`,
     //   {
@@ -54,6 +42,9 @@ const AppState = (props) => {
     //   .catch((error) => {
     //     console.error('Error:', error);
     //   });
+  }, []);
+
+  const getEvents = () => {
     fetch(url, {
       method: 'POST', // or 'PUT'
       headers: {
@@ -70,7 +61,7 @@ const AppState = (props) => {
       .catch((error) => {
         console.error('Error:', error);
       });
-  }, []);
+  };
 
   const processData = (data) => {
     let eventList = [];
@@ -120,10 +111,16 @@ const AppState = (props) => {
   };
 
   const setSelectedEvent = (calendarEvent) => {
-    console.log(calendarEvent);
     dispatch({
       type: SELECT_EVENT,
       payload: calendarEvent,
+    });
+  };
+
+  const setIsViewing = (value) => {
+    dispatch({
+      type: VIEW_EVENTS,
+      payload: value,
     });
   };
 
@@ -137,6 +134,8 @@ const AppState = (props) => {
         selectToday,
         setSelectedDate,
         setSelectedEvent,
+        setIsViewing,
+        getEvents,
       }}
     >
       {props.children}

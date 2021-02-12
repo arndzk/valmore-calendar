@@ -24,6 +24,7 @@ const Calendar = (props) => {
     events,
     selectedEvent,
     setSelectedEvent,
+    setIsViewing,
   } = appContext;
 
   const [currentMonth, setCurrentMonth] = useState(new Date());
@@ -149,7 +150,7 @@ const Calendar = (props) => {
     const dateObj = new Date(date);
     return dateObj.toLocaleTimeString('en', {
       timeStyle: 'short',
-      hour12: false,
+      hour12: true,
     });
   };
 

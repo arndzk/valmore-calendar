@@ -1,32 +1,58 @@
 import '../styles/Form.css';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Form from './Form';
-
-const addEventCall = (eventName, eventDescription, eventDate) => {
-  const url = `https://api.corvium.com/api/1.0.0/test/events/${process.env.REACT_APP_VALMORE_API_KEY}/new`;
-  fetch(url, {
-    method: 'POST',
-    headers: {
-      Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyMDE2IiwibmFtZSI6ImlBbGVydCBEZXZlbG9wZXIiLCJhZG1pbiI6dHJ1ZX0.2akYsCOtrsocM1UXPsoXbLjqwlc1X22lHCCcAqaNCo8',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      event_name: eventName,
-      event_description: eventDescription,
-      event_date: eventDate + '18:00:00',
-    }),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log('Success:', data);
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
-};
+import { format } from 'date-fns';
+import AppContext from '../context/App/appContext';
 
 const AddEventForm = (props) => {
+  const context = useContext(AppContext);
+  const { getEvents } = context;
+
+  const addEventCall = (payload) => {
+    const url = `https://api.corvium.com/api/1.0.0/test/events/${process.env.REACT_APP_VALMORE_API_KEY}/new`;
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        Authorization:
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyMDE2IiwibmFtZSI6ImlBbGVydCBEZXZlbG9wZXIiLCJhZG1pbiI6dHJ1ZX0.2akYsCOtrsocM1UXPsoXbLjqwlc1X22lHCCcAqaNCo8',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        event_name: payload.payloadEventName,
+        event_description: payload.payloadEventDescription,
+        event_date: payload.payloadEventDate,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('Success:', data);
+
+        getEvents();
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  };
+
+  const preparePayload = (
+    eventName,
+    eventDescription,
+    eventTime,
+    eventDate
+  ) => {
+    console.log(eventName, eventDescription, eventTime, eventDate);
+    const formattedDate = format(eventDate, 'yyyy-MM-dd');
+    const formattedDateTime = formattedDate + ' ' + eventTime + ':00';
+    console.log(formattedDateTime);
+    const payload = {
+      payloadEventName: eventName,
+      payloadEventDescription: eventDescription,
+      payloadEventDate: formattedDateTime,
+    };
+    console.log(payload);
+    addEventCall(payload);
+  };
+
   return (
     <div className="form-container">
       <Form
@@ -34,8 +60,10 @@ const AddEventForm = (props) => {
         formTitle={'Add Event for: '}
         eventName={''}
         eventDescription={''}
+        eventTime={'00:00'}
         submitBtnText={'Save Event'}
         closeForm={props.hideAddEvent}
+        preparePayload={preparePayload}
       />
     </div>
   );

@@ -1,5 +1,5 @@
 import '../styles/App.css';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import AppState from '../context/App/AppState';
 import Header from './Header';
 import Footer from './Footer';
@@ -41,7 +41,12 @@ const App = () => {
           displayEventView={displayEventView}
         />
         {isAdding && <AddEventForm hideAddEvent={hideAddEvent} />}
-        {isEditing && <EditEventForm hideEditEvent={hideEditEvent} />}
+        {isEditing && (
+          <EditEventForm
+            hideEditEvent={hideEditEvent}
+            displayEventView={displayEventView}
+          />
+        )}
         {isViewing && (
           <EventView
             hideEventView={hideEventView}

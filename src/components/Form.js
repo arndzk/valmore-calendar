@@ -7,9 +7,24 @@ const Form = (props) => {
   const appContext = useContext(AppContext);
   const { selectedDate, selectedEvent, setSelectedEvent } = appContext;
 
+  let initialEventName;
+  let initialEventDescription;
+  let initialEventTime;
+
+  if (props.formType === 'add-form') {
+    initialEventName = '';
+    initialEventDescription = '';
+    initialEventTime = '00:00';
+  } else if (props.formType === 'edit-form') {
+    initialEventName = selectedEvent.event_name;
+    initialEventDescription = selectedEvent.event_description;
+    initialEventTime = props.eventTime;
+  }
+
   const initialState = {
-    eventName: selectedEvent.event_name,
-    eventDescription: selectedEvent.event_description,
+    eventName: initialEventName,
+    eventDescription: initialEventDescription,
+    eventTime: initialEventTime,
   };
 
   const reducer = (state, { property, value }) => {
@@ -25,7 +40,7 @@ const Form = (props) => {
     dispatch({ property: event.target.name, value: event.target.value });
   };
 
-  const { eventName, eventDescription } = state;
+  const { eventName, eventDescription, eventTime } = state;
 
   let dateToDisplay;
 
@@ -35,7 +50,7 @@ const Form = (props) => {
   if (props.formType === 'edit-form') {
     dateToDisplay = format(
       parseISO(selectedEvent.event_date),
-      'EEEEEEEEE dd/MM hh:mm'
+      'EEEEEEEEE dd/MM HH:mm'
     );
   }
 
@@ -60,11 +75,28 @@ const Form = (props) => {
           onChange={handleChange}
           placeholder="Event Description"
         />
+        <label className="input-label">Time:</label>
+        <div className="time-picker">
+          <input
+            type="time"
+            min="00:00"
+            max="24:00"
+            name="eventTime"
+            value={eventTime}
+            onChange={handleChange}
+          ></input>
+        </div>
       </div>
       <div className="form-btns">
         <div
           className="save-event btn"
           onClick={() => {
+            props.preparePayload(
+              eventName,
+              eventDescription,
+              eventTime,
+              selectedDate
+            );
             props.closeForm();
           }}
         >
@@ -74,6 +106,9 @@ const Form = (props) => {
           className="cancel btn"
           onClick={() => {
             setSelectedEvent({});
+            if (props.formType === 'edit-form') {
+              props.displayEventView();
+            }
             props.closeForm();
           }}
         >

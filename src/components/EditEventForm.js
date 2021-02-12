@@ -13,6 +13,7 @@ const EditEventForm = (props) => {
         formTitle={'Edit Event '}
         submitBtnText={'Save Edits'}
         closeForm={props.hideEditEvent}
+        displayEventView={props.displayEventView}
       />
     </div>
   );

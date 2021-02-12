@@ -1,9 +1,14 @@
-import { ADD_EVENT, SELECT_DATE, GET_EVENTS, SELECT_EVENT } from '../types';
+import {
+  ADD_EVENT,
+  SELECT_DATE,
+  GET_EVENTS,
+  SELECT_EVENT,
+  VIEW_EVENTS,
+} from '../types';
 
 export default (state, action) => {
   switch (action.type) {
     case SELECT_DATE:
-      console.log(action.payload);
       return {
         ...state,
         selectedDate: action.payload,
@@ -22,6 +27,11 @@ export default (state, action) => {
       return {
         ...state,
         selectedEvent: action.payload,
+      };
+    case VIEW_EVENTS:
+      return {
+        ...state,
+        isViewing: action.payload,
       };
     default:
       return state;
