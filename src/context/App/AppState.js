@@ -3,7 +3,7 @@ import React, { useReducer, useEffect } from 'react';
 import AppReducer from './appReducer';
 import AppContext from './appContext';
 
-import { ADD_EVENT, VIEW_EVENT, SELECT_DATE, GET_EVENTS } from '../types';
+import { ADD_EVENT, SELECT_DATE, SELECT_EVENT, GET_EVENTS } from '../types';
 
 const AppState = (props) => {
   const initialState = {
@@ -11,10 +11,10 @@ const AppState = (props) => {
     selectedEvent: {},
     selectedDate: new Date(),
     currentDate: new Date(),
-    status: 'idle',
   };
 
   const url = `https://api.corvium.com/api/1.0.0/test/events/${process.env.REACT_APP_VALMORE_API_KEY}/list`;
+  //const url = `https://api.corvium.com/api/1.0.0/test/events/${process.env.REACT_APP_VALMORE_API_KEY}/new`;
 
   useEffect(() => {
     // fetch(url, {
@@ -25,9 +25,9 @@ const AppState = (props) => {
     //     'Content-Type': 'application/json',
     //   },
     //   body: JSON.stringify({
-    //     event_name: 'Test Event 3',
-    //     event_description: 'This is a test event 3',
-    //     event_date: '2021-03-5 18:00:00',
+    //     event_name: 'Test Event 6',
+    //     event_description: 'This is a test event 6',
+    //     event_date: '2021-02-11 21:00:00',
     //   }),
     // })
     //   .then((response) => response.json())
@@ -37,13 +37,16 @@ const AppState = (props) => {
     //   .catch((error) => {
     //     console.error('Error:', error);
     //   });
-    // fetch(url, {
-    //   method: 'DELETE', // or 'PUT'
-    //   headers: {
-    //     Authorization:
-    //       'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyMDE2IiwibmFtZSI6ImlBbGVydCBEZXZlbG9wZXIiLCJhZG1pbiI6dHJ1ZX0.2akYsCOtrsocM1UXPsoXbLjqwlc1X22lHCCcAqaNCo8',
-    //   },
-    // })
+    // fetch(
+    //   `https://api.corvium.com/api/1.0.0/test/events/${process.env.REACT_APP_VALMORE_API_KEY}/60255498e4488100115479d7`,
+    //   {
+    //     method: 'DELETE', // or 'PUT'
+    //     headers: {
+    //       Authorization:
+    //         'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyMDE2IiwibmFtZSI6ImlBbGVydCBEZXZlbG9wZXIiLCJhZG1pbiI6dHJ1ZX0.2akYsCOtrsocM1UXPsoXbLjqwlc1X22lHCCcAqaNCo8',
+    //     },
+    //   }
+    // )
     //   .then((response) => response.json())
     //   .then((data) => {
     //     console.log('Success:', data);
@@ -116,10 +119,11 @@ const AppState = (props) => {
     });
   };
 
-  const setStatus = (newStatus) => {
+  const setSelectedEvent = (calendarEvent) => {
+    console.log(calendarEvent);
     dispatch({
-      type: VIEW_EVENT,
-      payload: newStatus,
+      type: SELECT_EVENT,
+      payload: calendarEvent,
     });
   };
 
@@ -129,11 +133,10 @@ const AppState = (props) => {
         events: state.events,
         selectedEvent: state.selectedEvent,
         selectedDate: state.selectedDate,
-        status: state.status,
         addEvent,
         selectToday,
         setSelectedDate,
-        setStatus,
+        setSelectedEvent,
       }}
     >
       {props.children}

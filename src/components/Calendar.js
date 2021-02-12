@@ -17,7 +17,14 @@ import {
 
 const Calendar = (props) => {
   const appContext = useContext(AppContext);
-  const { selectedDate, selectToday, setSelectedDate, events } = appContext;
+  const {
+    selectedDate,
+    selectToday,
+    setSelectedDate,
+    events,
+    selectedEvent,
+    setSelectedEvent,
+  } = appContext;
 
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -45,7 +52,7 @@ const Calendar = (props) => {
           </span>
         </div>
         <div className="right-div">
-          <div className="add-event btn" onClick={props.triggerAddEvent}>
+          <div className="add-event btn" onClick={props.displayAddEvent}>
             <div className="icon">add</div>
             <span>Add Event</span>
           </div>
@@ -122,14 +129,29 @@ const Calendar = (props) => {
           <div
             className="calendar-event"
             key={calendarEvent._id}
-            onClick={props.triggerEditEvent}
+            onClick={() => {
+              setSelectedEvent(calendarEvent);
+              props.displayEditEvent();
+            }}
           >
-            {calendarEvent.event_name}
+            <span className="event-time">
+              {formatTime(calendarEvent.event_date)}
+            </span>
+            <span>{calendarEvent.event_name}</span>
           </div>
         );
       }
     });
     return <div className="event-cells">{eventArray}</div>;
+  };
+
+  const formatTime = (date) => {
+    console.log(typeof date);
+    const dateObj = new Date(date);
+    console.log(
+      dateObj.toLocaleTimeString('en', { timeStyle: 'short', hour12: false })
+    );
+    console.log(dateObj.getTimezoneOffset());
   };
 
   const resetToToday = () => {
