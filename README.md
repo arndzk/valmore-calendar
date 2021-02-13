@@ -1,5 +1,7 @@
 # Valmore Calendar
 
+![Alt text](/readme-assets/valmore-calendar.png?raw=true "Valmore Calendar")
+
 As a coding test from Valmore Technologies, this calendar communicates with an API for the following: 
 - Event display 
 - Event addition 

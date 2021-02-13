@@ -34,24 +34,34 @@
   cursor: default;
 }
 
-#source-code-icon {
+.link-container {
   padding: 5px 25px 5px 5px;
+  font-size: 14px;
 }
 
-#source-code-icon a {
+#source-code-icon {
   font-size: 28px;
-  text-decoration: none;
 }
 
-#source-code-icon a:visited {
+.link:visited {
   text-decoration: none;
   color: inherit;
 }
 
-#source-code-icon a:hover {
+.link:hover {
   text-decoration: none;
   color: var(--accent);
   transition: 0.25s;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.link-text {
+  margin-left: 5px;
 }
 
 .instructions {

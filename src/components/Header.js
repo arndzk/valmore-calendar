@@ -15,15 +15,18 @@ const Header = () => {
           click on an event to edit or delete it
         </span>
       </div>
-      <span id="source-code-icon">
+      <div className="link-container">
         <a
           href="https://github.com/arndzk/valmore-calendar"
           target="blank"
-          className="icon"
+          className="link"
         >
-          code
+          <span id="source-code-icon" className="icon">
+            code
+          </span>
+          <span className="link-text">View Repository</span>
         </a>
-      </span>
+      </div>
     </div>
   );
 };
