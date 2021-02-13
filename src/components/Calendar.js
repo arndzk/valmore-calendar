@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import AppContext from '../context/App/appContext';
+import AppContext from '../context/App/AppContext';
 import {
   format,
   startOfMonth,

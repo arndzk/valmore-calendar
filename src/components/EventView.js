@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import AppContext from '../context/App/appContext';
+import AppContext from '../context/App/AppContext';
 import { isSameDay, parseISO, format } from 'date-fns';
 import { formatTime } from '../utils/formatter';
 import '../styles/EventView.css';
@@ -36,14 +36,16 @@ const EventView = (props) => {
     return <div className="day-event-cells">{eventArray}</div>;
   };
 
-  //<span>{format(parseISO(selectedDate), 'EEEEEEEEE dd/MM')}</span>;
-
   return (
     <div className="form-container">
       <div className="form">
         <div className="form-header">
-          <span>Events for: </span>
-          <span>{format(selectedDate, 'EEEEEEEEE dd/MM')}</span>
+          <div className="header-text">
+            <span>Events for: </span>
+            <span className="header-date">
+              {format(selectedDate, 'EEEEEEEEE dd/MM')}
+            </span>
+          </div>
         </div>
         <div className="event-view">{renderEvents(selectedDate)}</div>
         <div className="form-btns">

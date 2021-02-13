@@ -2,7 +2,7 @@ import '../styles/Form.css';
 import React, { useContext } from 'react';
 import Form from './Form';
 import { format } from 'date-fns';
-import AppContext from '../context/App/appContext';
+import AppContext from '../context/App/AppContext';
 
 const AddEventForm = (props) => {
   const context = useContext(AppContext);

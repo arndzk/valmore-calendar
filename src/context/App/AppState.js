@@ -1,7 +1,7 @@
 import React, { useReducer, useEffect } from 'react';
 
-import AppReducer from './appReducer';
-import AppContext from './appContext';
+import AppReducer from './AppReducer';
+import AppContext from './AppContext';
 
 import {
   ADD_EVENT,
@@ -20,16 +20,15 @@ const AppState = (props) => {
     isViewing: false,
   };
 
-  const url = `https://api.corvium.com/api/1.0.0/test/events/${process.env.REACT_APP_VALMORE_API_KEY}/list`;
-  //const url = `https://api.corvium.com/api/1.0.0/test/events/${process.env.REACT_APP_VALMORE_API_KEY}/new`;
-
   useEffect(() => {
     getEvents();
   }, []);
 
   const getEvents = () => {
+    const url = `https://api.corvium.com/api/1.0.0/test/events/${process.env.REACT_APP_VALMORE_API_KEY}/list`;
+
     fetch(url, {
-      method: 'POST', // or 'PUT'
+      method: 'POST',
       headers: {
         Authorization:
           'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyMDE2IiwibmFtZSI6ImlBbGVydCBEZXZlbG9wZXIiLCJhZG1pbiI6dHJ1ZX0.2akYsCOtrsocM1UXPsoXbLjqwlc1X22lHCCcAqaNCo8',

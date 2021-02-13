@@ -1,6 +1,6 @@
 import React, { useReducer, useContext } from 'react';
 import '../styles/Form.css';
-import AppContext from '../context/App/appContext';
+import AppContext from '../context/App/AppContext';
 import { format, parseISO } from 'date-fns';
 
 const Form = (props) => {
@@ -10,21 +10,25 @@ const Form = (props) => {
   let initialEventName;
   let initialEventDescription;
   let initialEventTime;
+  let initialEventDay;
 
   if (props.formType === 'add-form') {
     initialEventName = '';
     initialEventDescription = '';
     initialEventTime = '00:00';
+    initialEventDay = '';
   } else if (props.formType === 'edit-form') {
     initialEventName = selectedEvent.event_name;
     initialEventDescription = selectedEvent.event_description;
-    initialEventTime = props.eventTime;
+    initialEventTime = format(parseISO(selectedEvent.event_date), 'HH:mm');
+    initialEventDay = format(parseISO(selectedEvent.event_date), 'yyyy-MM-dd');
   }
 
   const initialState = {
     eventName: initialEventName,
     eventDescription: initialEventDescription,
     eventTime: initialEventTime,
+    eventDay: initialEventDay,
   };
 
   const reducer = (state, { property, value }) => {
@@ -40,7 +44,7 @@ const Form = (props) => {
     dispatch({ property: event.target.name, value: event.target.value });
   };
 
-  const { eventName, eventDescription, eventTime } = state;
+  const { eventName, eventDescription, eventTime, eventDay } = state;
 
   let dateToDisplay;
 
@@ -50,28 +54,34 @@ const Form = (props) => {
   if (props.formType === 'edit-form') {
     dateToDisplay = format(
       parseISO(selectedEvent.event_date),
-      'EEEEEEEEE dd/MM HH:mm'
+      `EEEEEEEEE dd/MM hh:mm aaaaa'm'`
     );
   }
 
   return (
     <form id={props.formType} className="form">
       <div className="form-header">
-        <span>{props.formTitle}</span>
-        <span className="header-date">{dateToDisplay}</span>
-        {props.formType === 'edit-form' && (
-          <div
-            className="icon delete-btn"
-            onClick={() => {
-              props.deleteEvent();
-              props.closeForm();
-            }}
-          >
-            delete
-          </div>
-        )}
+        <div className="left-div"></div>
+        <div className="header-text center-div">
+          <span>{props.formTitle}</span>
+          <span className="header-date">{dateToDisplay}</span>
+        </div>
+        <div className="right-div"></div>
       </div>
       <div className="form-inputs">
+        {props.formType === 'edit-form' && (
+          <div className="delete-controls">
+            <div
+              className="icon delete-btn"
+              onClick={() => {
+                props.deleteEvent();
+                props.closeForm();
+              }}
+            >
+              delete
+            </div>
+          </div>
+        )}
         <label className="input-label">Event Name:</label>
         <input
           name="eventName"
@@ -86,16 +96,29 @@ const Form = (props) => {
           onChange={handleChange}
           placeholder="Event Description"
         />
-        <label className="input-label">Time:</label>
-        <div className="time-picker">
-          <input
-            type="time"
-            min="00:00"
-            max="24:00"
-            name="eventTime"
-            value={eventTime}
-            onChange={handleChange}
-          ></input>
+        <div className="pickers">
+          <div className="time-picker picker">
+            <label className="input-label">Time:</label>
+            <input
+              type="time"
+              min="00:00"
+              max="24:00"
+              name="eventTime"
+              value={eventTime}
+              onChange={handleChange}
+            ></input>
+          </div>
+          {props.formType === 'edit-form' && (
+            <div className="date-picker picker">
+              <label className="input-label">Date:</label>
+              <input
+                type="date"
+                name="eventDay"
+                value={eventDay}
+                onChange={handleChange}
+              ></input>
+            </div>
+          )}
         </div>
       </div>
       <div className="form-btns">
@@ -106,7 +129,7 @@ const Form = (props) => {
               eventName,
               eventDescription,
               eventTime,
-              selectedDate
+              props.formType === 'add-form' ? selectedEvent : new Date(eventDay)
             );
             props.closeForm();
           }}
