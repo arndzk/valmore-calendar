@@ -29,6 +29,8 @@ const Form = (props) => {
     eventDescription: initialEventDescription,
     eventTime: initialEventTime,
     eventDay: initialEventDay,
+    hasEmptyName: false,
+    hasEmptyTime: false,
   };
 
   const reducer = (state, { property, value }) => {
@@ -44,7 +46,30 @@ const Form = (props) => {
     dispatch({ property: event.target.name, value: event.target.value });
   };
 
-  const { eventName, eventDescription, eventTime, eventDay } = state;
+  const showErrName = () => {
+    dispatch({ property: 'hasEmptyName', value: true });
+  };
+
+  const showErrTime = () => {
+    dispatch({ property: 'hasEmptyTime', value: true });
+  };
+
+  const hideErrName = () => {
+    dispatch({ property: 'hasEmptyName', value: false });
+  };
+
+  const hideErrTime = () => {
+    dispatch({ property: 'hasEmptyTime', value: false });
+  };
+
+  const {
+    eventName,
+    eventDescription,
+    eventTime,
+    eventDay,
+    hasEmptyName,
+    hasEmptyTime,
+  } = state;
 
   let dateToDisplay;
 
@@ -82,7 +107,13 @@ const Form = (props) => {
             </div>
           </div>
         )}
-        <label className="input-label">Event Name:</label>
+        <div className="input-text">
+          <label className="input-label">Event Name:</label>
+          {hasEmptyName && (
+            <span className="err-msg">Please, fill out this field!</span>
+          )}
+        </div>
+
         <input
           name="eventName"
           value={eventName}
@@ -120,18 +151,35 @@ const Form = (props) => {
             </div>
           )}
         </div>
+        {hasEmptyTime && <span className="err-msg">Please, pick a time!</span>}
       </div>
       <div className="form-btns">
         <div
           className="save-event btn"
           onClick={() => {
-            props.preparePayload(
-              eventName,
-              eventDescription,
-              eventTime,
-              props.formType === 'add-form' ? selectedEvent : new Date(eventDay)
-            );
-            props.closeForm();
+            if (eventName !== '') {
+              hideErrName();
+            }
+            if (eventTime !== '') {
+              hideErrTime();
+            }
+            if (eventName === '') {
+              showErrName();
+            }
+            if (eventTime === '') {
+              showErrTime();
+            }
+            if (eventName !== '' && eventTime !== '') {
+              props.preparePayload(
+                eventName,
+                eventDescription,
+                eventTime,
+                props.formType === 'add-form'
+                  ? selectedDate
+                  : new Date(eventDay)
+              );
+              props.closeForm();
+            }
           }}
         >
           <span>{props.submitBtnText}</span>

@@ -94,8 +94,18 @@
   align-items: center;
 }
 
-input[type='time']::-webkit-clear-button {
-  display: none;
+.input-text {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.err-msg {
+  color: var(--accent);
+  font-size: 12px;
+  font-style: italic;
+  margin-left: 10px;
 }
 
 .pickers {
@@ -108,7 +118,7 @@ input[type='time']::-webkit-clear-button {
 
 .picker {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
 }
 
