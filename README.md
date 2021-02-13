@@ -1,3 +1,11 @@
+# Valmore Calendar
+
+As a coding test from Valmore Technologies, this calendar communicates with an API for the following: 
+- Event display 
+- Event addition 
+- Event editing 
+- Event deletion
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
