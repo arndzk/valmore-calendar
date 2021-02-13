@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import AppContext from '../context/App/appContext';
 import { isSameDay, parseISO, format } from 'date-fns';
+import { formatTime } from '../utils/formatter';
 import '../styles/EventView.css';
 
 const EventView = (props) => {
@@ -33,14 +34,6 @@ const EventView = (props) => {
       }
     });
     return <div className="day-event-cells">{eventArray}</div>;
-  };
-
-  const formatTime = (date) => {
-    const dateObj = new Date(date);
-    return dateObj.toLocaleTimeString('en', {
-      timeStyle: 'short',
-      hour12: true,
-    });
   };
 
   //<span>{format(parseISO(selectedDate), 'EEEEEEEEE dd/MM')}</span>;

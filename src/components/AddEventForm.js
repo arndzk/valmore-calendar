@@ -1,5 +1,5 @@
 import '../styles/Form.css';
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import Form from './Form';
 import { format } from 'date-fns';
 import AppContext from '../context/App/appContext';
@@ -43,11 +43,12 @@ const AddEventForm = (props) => {
     console.log(eventName, eventDescription, eventTime, eventDate);
     const formattedDate = format(eventDate, 'yyyy-MM-dd');
     const formattedDateTime = formattedDate + ' ' + eventTime + ':00';
+    const ISOformat = new Date(formattedDateTime).toISOString();
     console.log(formattedDateTime);
     const payload = {
       payloadEventName: eventName,
       payloadEventDescription: eventDescription,
-      payloadEventDate: formattedDateTime,
+      payloadEventDate: ISOformat,
     };
     console.log(payload);
     addEventCall(payload);

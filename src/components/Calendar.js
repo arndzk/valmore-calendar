@@ -1,4 +1,3 @@
-import '../styles/Calendar.css';
 import React, { useState, useContext } from 'react';
 import AppContext from '../context/App/appContext';
 import {
@@ -14,22 +13,16 @@ import {
   addDays,
   parseISO,
 } from 'date-fns';
+import { formatTime } from '../utils/formatter';
+import '../styles/Calendar.css';
 
 const Calendar = (props) => {
   const appContext = useContext(AppContext);
-  const {
-    selectedDate,
-    selectToday,
-    setSelectedDate,
-    events,
-    selectedEvent,
-    setSelectedEvent,
-    setIsViewing,
-  } = appContext;
+  const { selectedDate, selectToday, setSelectedDate, events } = appContext;
 
   const [currentMonth, setCurrentMonth] = useState(new Date());
+  // eslint-disable-next-line no-unused-vars
   const [currentDate, setCurrentDate] = useState(new Date());
-  //const [selectedDate, setSelectedDate] = useState(new Date());
 
   const renderMonth = (props) => {
     const monthFormat = 'MMMM yyyy';
@@ -131,7 +124,6 @@ const Calendar = (props) => {
             className="calendar-event"
             key={calendarEvent._id}
             onClick={() => {
-              //setSelectedEvent(calendarEvent);
               props.displayEventView();
             }}
           >
@@ -144,14 +136,6 @@ const Calendar = (props) => {
       }
     });
     return <div className="event-cells">{eventArray}</div>;
-  };
-
-  const formatTime = (date) => {
-    const dateObj = new Date(date);
-    return dateObj.toLocaleTimeString('en', {
-      timeStyle: 'short',
-      hour12: true,
-    });
   };
 
   const resetToToday = () => {

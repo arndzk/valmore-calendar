@@ -25,23 +25,6 @@ const AppState = (props) => {
 
   useEffect(() => {
     getEvents();
-    // fetch(
-    //   `https://api.corvium.com/api/1.0.0/test/events/${process.env.REACT_APP_VALMORE_API_KEY}/60255498e4488100115479d7`,
-    //   {
-    //     method: 'DELETE', // or 'PUT'
-    //     headers: {
-    //       Authorization:
-    //         'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyMDE2IiwibmFtZSI6ImlBbGVydCBEZXZlbG9wZXIiLCJhZG1pbiI6dHJ1ZX0.2akYsCOtrsocM1UXPsoXbLjqwlc1X22lHCCcAqaNCo8',
-    //     },
-    //   }
-    // )
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     console.log('Success:', data);
-    //   })
-    //   .catch((error) => {
-    //     console.error('Error:', error);
-    //   });
   }, []);
 
   const getEvents = () => {

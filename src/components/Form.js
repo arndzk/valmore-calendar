@@ -59,6 +59,17 @@ const Form = (props) => {
       <div className="form-header">
         <span>{props.formTitle}</span>
         <span className="header-date">{dateToDisplay}</span>
+        {props.formType === 'edit-form' && (
+          <div
+            className="icon delete-btn"
+            onClick={() => {
+              props.deleteEvent();
+              props.closeForm();
+            }}
+          >
+            delete
+          </div>
+        )}
       </div>
       <div className="form-inputs">
         <label className="input-label">Event Name:</label>
