@@ -1,0 +1,55 @@
+@keyframes spinner {
+  0% {
+    transform: translate3d(-50%, -50%, 0) rotate(0deg);
+  }
+  100% {
+    transform: translate3d(-50%, -50%, 0) rotate(360deg);
+  }
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+#LoadingSpinner {
+  animation: fadein 0.5s;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading-spinner {
+  height: 50%;
+  opacity: 1;
+  position: relative;
+  transition: opacity linear 0.1s;
+}
+
+.loading-spinner::before {
+  animation: 2s linear infinite spinner;
+  border: solid 8px var(--background-back);
+  border-bottom-color: var(--accent);
+  border-radius: 50%;
+  content: '';
+  height: 80px;
+  left: 50%;
+  opacity: inherit;
+  position: absolute;
+  top: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  transform-origin: center;
+  width: 80px;
+  will-change: transform;
+}
+
+.loading-msg-text {
+  color: var(--text);
+  font-size: 24px;
+}

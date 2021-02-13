@@ -8,7 +8,7 @@ const Header = () => {
         <span id="calendar-icon" className="icon">
           calendar_today
         </span>
-        <span>Valmore Calendar</span>
+        <span className="title">Valmore Calendar</span>
         <span className="instructions">
           Instructions: Pick a date, then click on 'Add Event' to add a new
           event | Click on events to view all events for the day, and there,

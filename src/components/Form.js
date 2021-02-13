@@ -101,6 +101,7 @@ const Form = (props) => {
               onClick={() => {
                 props.deleteEvent();
                 props.closeForm();
+                props.displayLoadingSpinner();
               }}
             >
               delete
@@ -179,6 +180,7 @@ const Form = (props) => {
                   : new Date(eventDay)
               );
               props.closeForm();
+              props.displayLoadingSpinner();
             }
           }}
         >

@@ -6,12 +6,14 @@ import Footer from './Footer';
 import Calendar from './Calendar';
 import AddEventForm from './AddEventForm';
 import EditEventForm from './EditEventForm';
-import EventView from './EventView.js';
+import EventView from './EventView';
+import LoadingSpinner from './LoadingSpinner';
 
 const App = () => {
   const [isAdding, setIsAdding] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [isViewing, setIsViewing] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const displayAddEvent = () => {
     setIsAdding(true);
@@ -31,6 +33,12 @@ const App = () => {
   const hideEventView = () => {
     setIsViewing(false);
   };
+  const displayLoadingSpinner = () => {
+    setIsLoading(true);
+  };
+  const hideLoadingSpinner = () => {
+    setIsLoading(false);
+  };
 
   return (
     <div className="App">
@@ -39,12 +47,21 @@ const App = () => {
         <Calendar
           displayAddEvent={displayAddEvent}
           displayEventView={displayEventView}
+          hideLoadingSpinner={hideLoadingSpinner}
         />
-        {isAdding && <AddEventForm hideAddEvent={hideAddEvent} />}
+        {isAdding && (
+          <AddEventForm
+            hideAddEvent={hideAddEvent}
+            displayLoadingSpinner={displayLoadingSpinner}
+            hideLoadingSpinner={hideLoadingSpinner}
+          />
+        )}
         {isEditing && (
           <EditEventForm
             hideEditEvent={hideEditEvent}
             displayEventView={displayEventView}
+            displayLoadingSpinner={displayLoadingSpinner}
+            hideLoadingSpinner={hideLoadingSpinner}
           />
         )}
         {isViewing && (
@@ -53,6 +70,7 @@ const App = () => {
             displayEditEvent={displayEditEvent}
           />
         )}
+        {isLoading && <LoadingSpinner />}
         <Footer />
       </AppState>
     </div>

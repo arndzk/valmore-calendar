@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import AppContext from '../context/App/AppContext';
 import {
   format,
@@ -23,6 +23,10 @@ const Calendar = (props) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
   // eslint-disable-next-line no-unused-vars
   const [currentDate, setCurrentDate] = useState(new Date());
+
+  useEffect(() => {
+    props.hideLoadingSpinner();
+  }, []);
 
   const renderMonth = (props) => {
     const monthFormat = 'MMMM yyyy';
@@ -161,7 +165,7 @@ const Calendar = (props) => {
     <div className="Calendar">
       {renderMonth(props)}
       {renderWeekDays()}
-      {renderDates()}
+      {renderDates(props)}
     </div>
   );
 };

@@ -9,7 +9,6 @@ const EditEventForm = (props) => {
 
   const deleteEventCall = () => {
     const url = `https://api.corvium.com/api/1.0.0/test/events/${process.env.REACT_APP_VALMORE_API_KEY}/${selectedEvent._id}`;
-    console.log(selectedEvent._id);
     fetch(url, {
       method: 'DELETE',
       headers: {
@@ -21,6 +20,9 @@ const EditEventForm = (props) => {
       .then((data) => {
         console.log('Success:', data);
         getEvents();
+      })
+      .then(() => {
+        props.hideLoadingSpinner();
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -47,6 +49,9 @@ const EditEventForm = (props) => {
         console.log('Success:', data);
         getEvents();
       })
+      .then(() => {
+        props.hideLoadingSpinner();
+      })
       .catch((error) => {
         console.error('Error:', error);
       });
@@ -58,17 +63,14 @@ const EditEventForm = (props) => {
     eventTime,
     eventDate
   ) => {
-    console.log(eventName, eventDescription, eventTime, eventDate);
     const formattedDate = format(eventDate, 'yyyy-MM-dd');
     const formattedDateTime = formattedDate + ' ' + eventTime + ':00';
     const ISOformat = new Date(formattedDateTime).toISOString();
-    console.log(formattedDateTime);
     const payload = {
       payloadEventName: eventName,
       payloadEventDescription: eventDescription,
       payloadEventDate: ISOformat,
     };
-    console.log(payload);
     editEventCall(payload);
   };
 
@@ -82,6 +84,7 @@ const EditEventForm = (props) => {
         displayEventView={props.displayEventView}
         deleteEvent={deleteEventCall}
         preparePayload={preparePayload}
+        displayLoadingSpinner={props.displayLoadingSpinner}
       />
     </div>
   );

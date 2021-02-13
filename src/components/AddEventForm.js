@@ -29,6 +29,9 @@ const AddEventForm = (props) => {
 
         getEvents();
       })
+      .then(() => {
+        props.hideLoadingSpinner();
+      })
       .catch((error) => {
         console.error('Error:', error);
       });
@@ -40,17 +43,14 @@ const AddEventForm = (props) => {
     eventTime,
     eventDate
   ) => {
-    console.log(eventName, eventDescription, eventTime, eventDate);
     const formattedDate = format(eventDate, 'yyyy-MM-dd');
     const formattedDateTime = formattedDate + ' ' + eventTime + ':00';
     const ISOformat = new Date(formattedDateTime).toISOString();
-    console.log(formattedDateTime);
     const payload = {
       payloadEventName: eventName,
       payloadEventDescription: eventDescription,
       payloadEventDate: ISOformat,
     };
-    console.log(payload);
     addEventCall(payload);
   };
 
@@ -65,6 +65,7 @@ const AddEventForm = (props) => {
         submitBtnText={'Save Event'}
         closeForm={props.hideAddEvent}
         preparePayload={preparePayload}
+        displayLoadingSpinner={props.displayLoadingSpinner}
       />
     </div>
   );

@@ -23,6 +23,10 @@
   user-select: none;
 }
 
+.title {
+  white-space: nowrap;
+}
+
 #calendar-icon {
   color: var(--accent);
   font-size: 28px;
