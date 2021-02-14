@@ -7,6 +7,7 @@ As a coding test from Valmore Technologies, this calendar communicates with an A
 - Event addition 
 - Event editing 
 - Event deletion
+
 After cloning, run:
 
 ### `npm install`
